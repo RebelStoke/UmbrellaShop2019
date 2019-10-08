@@ -9,7 +9,7 @@ namespace UmbrellaShop.Core.ApplicationService
     {
 
         List<Customer> GetCustomer();
-        Customer getCustomerByID(int id);
+        Customer GetCustomerByID(int id);
         Customer NewCustomer(string firstName, string lastName, string address, string email, string phoneNumber, int id);
         Customer CreateCustomer(Customer customer);
         Customer DeleteCustomer(int id);

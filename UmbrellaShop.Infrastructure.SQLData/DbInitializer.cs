@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Remotion.Linq.Clauses;
+using UmbrellaShop.Core.ApplicationService;
 
 namespace UmbrellaShop.Infrastructure.SQLData
 {
@@ -11,6 +13,7 @@ namespace UmbrellaShop.Infrastructure.SQLData
         {
             var listOfUmbrellas = new List<Umbrella>();
             var listOfCustomer = new List<Customer>();
+            var listofOrders = new List<Order>();
 
             var Customer1 = new Customer { FirstName = "Dude", LastName = "Son", Address = "Dirty Street", Email = "dude.son@xD.com", PhoneNumber = "66 66 66 66" };
             var Customer2 = new Customer { FirstName = "Big", LastName = "Lebowski", Address = "Dirty Street", Email = "dude.son@xD.com", PhoneNumber = "66 66 66 66" };
@@ -32,9 +35,17 @@ namespace UmbrellaShop.Infrastructure.SQLData
             listOfUmbrellas.Add(Umbrella4);
             listOfUmbrellas.Add(Umbrella5);
             listOfUmbrellas.Add(Umbrella6);
+            var Order1 = new Order {OrderDate = DateTime.Now};
+            var Order2 = new Order {OrderDate = DateTime.Now};
+            var Order3 = new Order {OrderDate = DateTime.Now};
+            listofOrders.Add(Order1);
+            listofOrders.Add(Order2);
+            listofOrders.Add(Order3);
+
 
             context.Umbrellas.AddRange(listOfUmbrellas);
             context.Customers.AddRange(listOfCustomer);
+            context.Orders.AddRange(listofOrders);
             context.SaveChanges();
         }
     }

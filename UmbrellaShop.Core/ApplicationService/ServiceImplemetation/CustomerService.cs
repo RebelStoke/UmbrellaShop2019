@@ -10,12 +10,12 @@ namespace UmbrellaShop.Core.ApplicationService.ServiceImplementation
     public class CustomerService : ICustomerService
     {
         ICustomerRepository _CustomerRepository;
-        public CustomerService(ICustomerRepository CustomerRepository) {
-            _CustomerRepository = CustomerRepository;
+        public CustomerService(ICustomerRepository customerRepository) {
+            _CustomerRepository = customerRepository;
         }
-        public Customer CreateCustomer(Customer Customer)
+        public Customer CreateCustomer(Customer customer)
         {
-           return _CustomerRepository.Create(Customer);
+           return _CustomerRepository.Create(customer);
         }
 
         public Customer DeleteCustomer(int id)
@@ -28,7 +28,7 @@ namespace UmbrellaShop.Core.ApplicationService.ServiceImplementation
             return _CustomerRepository.ReadCustomers().ToList();
         }
 
-        public Customer getCustomerByID(int id) {
+        public Customer GetCustomerByID(int id) {
             return _CustomerRepository.ReadByID(id);
         }
 
@@ -37,9 +37,9 @@ namespace UmbrellaShop.Core.ApplicationService.ServiceImplementation
             return new Customer { FirstName = firstName, LastName = lastName, Address = address, Email = email, PhoneNumber = phoneNumber, Id = id };
         }
 
-        public Customer UpdateCustomer(int id, Customer Customer)
+        public Customer UpdateCustomer(int id, Customer customer)
         {
-           return _CustomerRepository.Update(id, Customer);
+           return _CustomerRepository.Update(id, customer);
         }
     }
 }
