@@ -24,6 +24,7 @@ namespace UmbrellaShop.Infrastructure.SQLData.Repositories
         {
             var Umbrella = ReadByID(id);
             context.Remove(Umbrella);
+            context.SaveChanges();
             return Umbrella;
         }
 
@@ -32,16 +33,26 @@ namespace UmbrellaShop.Infrastructure.SQLData.Repositories
             return context.Umbrellas.Find(id);
         }
 
-        public IEnumerable<Umbrella> ReadUmbrellas()
+        public IEnumerable<Umbrella> ReadUmbrellas(Filter filter)
         {
-            return context.Umbrellas.ToList();
+            if (filter != null)
+            {
+
+                var list = context.Umbrellas
+                .Skip((filter.CurrentPage - 1) * filter.ItemsPrPage)
+                .Take(filter.ItemsPrPage);
+                return list;
+
+            }
+            else
+                return context.Umbrellas;
         }
 
         public Umbrella Update(int id, Umbrella Umbrella)
         {
             if (Delete(id) != null) {
-                context.Umbrellas.Add(Umbrella);
-                return Umbrella;
+                Umbrella.Id = id;
+                return Create(Umbrella);
             }
             return null;
         }

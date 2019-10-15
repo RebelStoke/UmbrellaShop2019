@@ -7,7 +7,7 @@ namespace UmbrellaShop.Core.DomainService
 {
     public interface IUmbrellaRepository
     {
-        IEnumerable<Umbrella> ReadUmbrellas();
+        IEnumerable<Umbrella> ReadUmbrellas(Filter filter);
         Umbrella Create(Umbrella umbrella);
         Umbrella Delete(int id);
         Umbrella Update(int id, Umbrella umbrella);

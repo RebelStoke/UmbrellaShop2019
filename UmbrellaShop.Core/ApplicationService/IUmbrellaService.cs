@@ -7,7 +7,7 @@ namespace UmbrellaShop.Core.ApplicationService
 {
     public interface IUmbrellaService
     {
-        List<Umbrella> GetUmbrellas();
+        List<Umbrella> GetUmbrellas(Filter filter);
         List<Umbrella> GetUmbrellasByType(string type);
         Umbrella NewUmbrella(string type, string brand, string color,int size, double price);
         Umbrella CreateUmbrella(Umbrella umbrella);

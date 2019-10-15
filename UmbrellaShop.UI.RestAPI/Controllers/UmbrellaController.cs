@@ -15,9 +15,13 @@ namespace UmbrellaShop.UI.RestAPI.Controllers
         }
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<Umbrella>> Get()
+        public ActionResult<IEnumerable<Umbrella>> Get([FromQuery] Filter filter)
         {
-            return service.GetUmbrellas();
+            if (filter.CurrentPage == 0 || filter.ItemsPrPage == 0)
+            {
+                filter = null;
+            }
+            return service.GetUmbrellas(filter);
         }
 
         // GET api/values/5
@@ -29,23 +33,42 @@ namespace UmbrellaShop.UI.RestAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] Umbrella umbrella)
+        public ActionResult<Umbrella> Post([FromBody] Umbrella umbrella)
         {
-            service.CreateUmbrella(umbrella);
+            if (umbrella.Brand == "")
+            {
+                return BadRequest("No brand provided");
+            }
+            foreach (var item in service.GetUmbrellas(null))
+            {
+                if (item.Id == umbrella.Id)
+                {
+                    return BadRequest("Wrong ID");
+                }
+            }
+            return service.CreateUmbrella(umbrella);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Umbrella umbrella)
+        public ActionResult<Umbrella> Put(int id, [FromBody] Umbrella umbrella)
         {
-            service.UpdateUmbrella(id, umbrella);
+
+            foreach (var item in service.GetUmbrellas(null))
+            {
+                if (item.Id == id)
+                {
+                    return service.UpdateUmbrella(id, umbrella);
+                }
+            }
+            return BadRequest("Wrong Id");
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult<Umbrella> Delete(int id)
         {
-            service.DeleteUmbrella(id);
+            return service.DeleteUmbrella(id);
         }
     }
 }

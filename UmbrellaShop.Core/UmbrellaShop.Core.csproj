@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ApplicationService\ServiceImplemetation\" />
-    <Folder Include="DomainService\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.3.0" />
   </ItemGroup>
 

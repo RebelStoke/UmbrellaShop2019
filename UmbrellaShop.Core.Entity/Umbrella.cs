@@ -13,6 +13,7 @@ namespace UmbrellaShop.Core.Entity
         public string Color { get; set; }
         public int Size { get; set; }
         public double Price { get; set; }
+        public IList<OrderUmbrella> OrderUmbrellas { get; set; }
 
 
     }

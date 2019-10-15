@@ -38,12 +38,12 @@ namespace UmbrellaShop.Core.ApplicationService.ServiceImplementation
             return cheapestUmbrellas;
         }
 
-        public List<Umbrella> GetUmbrellas()
+        public List<Umbrella> GetUmbrellas(Filter filter)
         {
-           return _UmbrellaRepository.ReadUmbrellas().ToList();
+           return _UmbrellaRepository.ReadUmbrellas(filter).ToList();
         }
         public List<Umbrella> GetUmbrellasByType(string type) {
-            var list = _UmbrellaRepository.ReadUmbrellas();
+            var list = _UmbrellaRepository.ReadUmbrellas(null);
             var listByType = list.Where(Umbrella => Umbrella.Type.Equals(type));
             return listByType.ToList();
         }
@@ -63,7 +63,7 @@ namespace UmbrellaShop.Core.ApplicationService.ServiceImplementation
 
         public List<Umbrella> sortUmbrellasByPrice()
         {
-            var list = GetUmbrellas();
+            var list = GetUmbrellas(null);
             var sortedList = list.OrderBy(Umbrella => Umbrella.Price).ToList();
             return sortedList;
         }

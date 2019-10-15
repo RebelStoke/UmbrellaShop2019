@@ -8,6 +8,7 @@ using Newtonsoft.Json.Serialization;
 using PetshopApp2019.Infrastructure.SQLData.Repositories;
 using UmbrellaShop.Core.ApplicationService;
 using UmbrellaShop.Core.ApplicationService.ServiceImplementation;
+using UmbrellaShop.Core.ApplicationService.ServiceImplemetation;
 using UmbrellaShop.Core.DomainService;
 using UmbrellaShop.Infrastructure.SQLData;
 using UmbrellaShop.Infrastructure.SQLData.Repositories;
@@ -43,10 +44,21 @@ namespace UmbrellaShop.UI.RestAPI
                     });
                
             }
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    buildier => buildier
+                    .AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()
+                    );
+            }
+
+            );
             services.AddScoped<IUmbrellaRepository, UmbrellaRepository>();
             services.AddScoped<IUmbrellaService, UmbrellaService>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddMvc().AddJsonOptions(options =>
             {
@@ -59,6 +71,7 @@ namespace UmbrellaShop.UI.RestAPI
         }
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseCors("AllowSpecificOrigin");
             if (env.IsDevelopment())
             {
                 using (var scope = app.ApplicationServices.CreateScope())
@@ -78,6 +91,7 @@ namespace UmbrellaShop.UI.RestAPI
 
                     var context = scope.ServiceProvider.GetRequiredService<UmbrellaShopContext>();
                     context.Database.EnsureCreated();
+                    DbInitializer.Seed(context);
 
                 }
                 app.UseHsts();
